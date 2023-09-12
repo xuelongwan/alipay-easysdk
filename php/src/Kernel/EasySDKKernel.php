@@ -233,7 +233,7 @@ class EasySDKKernel
         $content = $signContentExtractor->getSignSourceData($respMap[AlipayConstants::BODY_FIELD],
             $respMap[AlipayConstants::METHOD_FIELD]);
         $signer = new Signer();
-        return $signer->verify($content, $sign, $alipayPublicKey);
+        return $signer->verify($content, $sign, $alipayPublicKey, $this->getConfig('signType'));
     }
 
     /**
@@ -250,7 +250,7 @@ class EasySDKKernel
         $sortedMap = $this->getSortedMap($systemParams, $bizParams, $textParams);
         $data = $this->getSignContent($sortedMap);
         $sign = new Signer();
-        return $sign->sign($data, $privateKey);
+        return $sign->sign($data, $privateKey, $this->getConfig('signType'));
     }
 
     /**
@@ -328,7 +328,7 @@ class EasySDKKernel
     public function verifyParams($parameters, $publicKey)
     {
         $sign = new Signer();
-        return $sign->verifyParams($parameters, $publicKey);
+        return $sign->verifyParams($parameters, $publicKey, $this->getConfig('signType'));
     }
 
     /**
